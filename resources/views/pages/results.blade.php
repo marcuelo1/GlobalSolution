@@ -9,7 +9,9 @@
           <tr>
             <th scope="col">Product Name</th>
             <th scope="col">Price</th>
+            <th scope="col">Price Per</th>
             <th scope="col">Min Order</th>
+            <th scope="col">Unit</th>
           </tr>
         </thead>
         <tbody>
@@ -17,7 +19,9 @@
                 <tr>
                     <td><a href="/../public/products/{{$product->id}}">{{$product->ProductName}}</a></td>
                     <td>{{$product->Price}}</td>
+                    <td>{{$product->PriceUnit}}</td>
                     <td>{{$product->MinOrder}}</td>
+                    <td>{{$product->MinOrderUnit}}</td>
                 </tr> 
             @endforeach
         </tbody>

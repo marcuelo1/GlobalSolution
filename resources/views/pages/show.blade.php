@@ -2,7 +2,7 @@
 
 @section('content')
     <h2>{{$product->ProductName}}</h2>
-    <h6>Price: {{$product->Price}} &nbsp;&nbsp;&nbsp; MinOrder: {{$product->MinOrder}}</h6>
+    <h6>Price: {{$product->Price}} per {{$product->PriceUnit}} &nbsp;&nbsp;&nbsp; MinOrder: {{$product->MinOrder}} {{$product->MinOrderUnit}}</h6>
     <br>
     <div class="media">
         <img src="/../storage/app/public/images/{{$product->Image}}" class="align-self-center mr-3" style="width: 500px">
