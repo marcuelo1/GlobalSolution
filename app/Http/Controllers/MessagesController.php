@@ -15,6 +15,10 @@ class MessagesController extends Controller
     }
 
     public function index(){
+        if(auth()->user()->user_pos == 'Admin'){
+            return redirect('/../public/AdminPage');
+        }
+
         $user = User::find(auth()->user()->id);
         $chatlist = [];
         if($user->user_pos == 'Buyer'){
@@ -42,6 +46,10 @@ class MessagesController extends Controller
     }
 
     public function message($id){
+        if(auth()->user()->user_pos == 'Admin'){
+            return redirect('/../public/AdminPage');
+        }
+
         $user = User::find(auth()->user()->id);
         $username2 = User::find($id);
 

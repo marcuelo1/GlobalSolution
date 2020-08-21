@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\User;
 
 class HomeController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth', ['except' => ['index', 'search']]);
+    }
     /**
      * Show the application dashboard.
      *
@@ -14,6 +18,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(auth()->guest()){
+            return view('home');
+        }else if(auth()->user()->user_pos == 'Admin'){
+            return redirect('/../public/AdminPage');
+        }
         return view('home');
     }
 

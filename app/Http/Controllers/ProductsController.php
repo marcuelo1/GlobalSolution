@@ -21,6 +21,10 @@ class ProductsController extends Controller
      */
     public function index()
     {
+        if(auth()->user()->user_pos == 'Admin'){
+            return redirect('/../public/AdminPage');
+        }
+
         $user_pos = auth()->user()->user_pos;
         if($user_pos == 'Buyer'){
             return view('inc.404');
@@ -38,6 +42,10 @@ class ProductsController extends Controller
      */
     public function create()
     {
+        if(auth()->user()->user_pos == 'Admin'){
+            return redirect('/../public/AdminPage');
+        }
+
         $user_pos = auth()->user()->user_pos;
         if($user_pos == 'Buyer'){
             return view('inc.404');
@@ -123,6 +131,10 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
+        if(auth()->user()->user_pos == 'Admin'){
+            return redirect('/../public/AdminPage');
+        }
+
         $user_pos = auth()->user()->user_pos;
         if($user_pos == 'Buyer'){
             return view('inc.404');

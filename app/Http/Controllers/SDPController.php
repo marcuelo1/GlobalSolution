@@ -3,13 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Agriculture;
+use App\User;
 
 class SDPController extends Controller
 {
-    public function Agriculture(Request $request){
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show', 'retrieveData', 'retrieveTopData']]);
+    }
+
+    //Admin Page
+    public function AdminPage(){
+
+        if(auth()->user()->user_pos == 'Admin'){
+            return view('pages.AdminPage');
+        }else{
+            return view('inc.404');
+        }
+    }
+
+    //Add Product Page
+    public function AddProduct($category){
+        if(auth()->user()->user_pos == 'Admin'){
+            return view('pages.AdminAddProduct')->with('category', $category);
+        }else{
+            return view('inc.404');
+        }
+    }
+
+    //Store Product to database
+    public function StoreProduct(Request $request){
         $this->validate($request, [
             'productName' => 'required',
+            'info' => 'required',
             'supply' => 'required',
             'demand' => 'required',
             'price' => 'required',
@@ -28,65 +57,111 @@ class SDPController extends Controller
             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
             //upload image
             $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+        }else{
+            $fileNameToStore = 'noimage.jpg';
         }
 
-        $product = Agriculture::find($request->productName);
-        
-        if($request->hasFile('image')){
-            $product->Image = $fileNameToStore;
+        DB::table("$request->category")->insert(
+            [
+                'ProductName'   => $request->productName,
+                'Supply'        => $request->supply,
+                'Demand'        => $request->demand,
+                'Price'         => $request->price,
+                'Info'          => $request->info,
+                'Image'         => $fileNameToStore,
+                'start_year'    => 2000,
+                'created_at'    => strftime("%Y-%m-%d %H:%M:%S"),
+                'updated_at'    => strftime("%Y-%m-%d %H:%M:%S"),
+            ]
+        );
+
+        return redirect('/../public/AdminPage')->with('success', 'Product added successfully');
+    }
+
+    //Add SDP Data to Product
+    public function AddSDP($category){
+        if(auth()->user()->user_pos == 'Admin'){
+            //products from Database
+            $DBproducts = DB::table("$category")->get();
+
+            //products to be send
+            $products = [];
+            foreach($DBproducts as $product){
+                $products[$product->id] = $product->ProductName;
+            }
+
+            $data = [
+                'products' => $products,
+                'category' => $category,
+            ];
+
+            return view('pages.AdminAddSDP')->with($data);
+            
+        }else{
+            return view('inc.404');
         }
+    }
+
+    //Store SDP Data to Product
+    public function StoreSDP(Request $request){
+        $this->validate($request, [
+            'productName' => 'required',
+            'supply' => 'required',
+            'demand' => 'required',
+            'price' => 'required',
+        ]);
+
+        $product = DB::table("$request->category")->where('id', '=', $request->productName)->get();
 
         //supply
-        if($product->Supply==''){
-            $data = array($request->supply);
-            $data = implode(",", $data);
-        }else{
-            $Supply = explode(",", $product->Supply);
-            array_push($Supply, $request->supply);
-            $data = implode(",", $Supply);
-        }
-        $product->Supply = $data;
+        $Supply = explode(",", $product[0]->Supply);
+        array_push($Supply, $request->supply);
+        $Supplydata = implode(",", $Supply);
 
         //demand
-        if($product->Demand==''){
-            $data = array( $request->demand);
-            $data = implode(",", $data);
-        }else{
-            $Demand = explode(",", $product->Demand);
-            array_push($Demand, $request->demand);
-            $data = implode(",", $Demand);
-        }
-        $product->Demand = $data;
+        $Demand = explode(",", $product[0]->Demand);
+        array_push($Demand, $request->demand);
+        $Demanddata = implode(",", $Demand);
 
         //price
-        if($product->Price==''){
-            $data = array( $request->price);
-            $data = implode(",", $data);
-        }else{
-            $Price = explode(",", $product->Price);
-            array_push($Price, $request->price);
-            $data = implode(",", $Price);
-        }
-        $product->Price = $data;
+        $Price = explode(",", $product[0]->Price);
+        array_push($Price, $request->price);
+        $Pricedata = implode(",", $Price);
 
-        if($request->info != ''){
-            $product->Info = $request->info;
-        }
+        DB::table("$request->category")->where('id', '=', $request->productName)
+                                        ->update(
+                                            [
+                                                'Supply' => $Supplydata,
+                                                'Demand' => $Demanddata,
+                                                'Price'  => $Pricedata,
+                                                'updated_at'    => strftime("%Y-%m-%d %H:%M:%S"),
+                                            ]
+                                        );
 
-        $product->save();
-
-        return redirect('/')->with('success', 'SDP added successfully');
+        return redirect('/../public/AdminPage')->with('success', 'SDP Data added successfully');
     }
 
-    public function AgricultureAddData(){
-        $data = Agriculture::all();
-        $products = [];
-        foreach($data as $product){
-            $products[$product->id] = $product->ProductName;
-        }
-        return view('pages.AgricultureAddData')->with('products', $products);
+    //Add Admin Account to database
+    public function AddAcc(Request $request){
+        $this->validate($request, [
+            'Name' => 'required',
+            'Password' => 'required',
+            'Location' => 'required',
+            'Email' => 'required',
+        ]);
+
+        $user = new User();
+        $user->name = $request->Name;
+        $user->email = $request->Email;
+        $user->password = Hash::make($request->Password);
+        $user->location = $request->Location;
+        $user->user_pos = 'Admin';
+        $user->save();
+
+        return redirect('/../public/AdminPage')->with('success', 'Admin Account added successfully');
     }
 
+    //Show Products
     public function index(){
         $products = Agriculture::all();
         //this will hold the product id of top 3

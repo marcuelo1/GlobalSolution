@@ -20,9 +20,17 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/search', 'HomeController@search');
 
 //Admin commands
-Route::get('/AgriAddSDP', 'SDPController@AgricultureAddData');
+Route::get('/AdminPage', 'SDPController@AdminPage');
 
-Route::post('/AgriStoreSDP', 'SDPController@Agriculture');
+Route::get('/AdminPage/{category}', 'SDPController@AddProduct');
+
+Route::post('/StoreProduct', 'SDPController@StoreProduct');
+
+Route::get('AdminPage/addSDP/{category}', 'SDPController@AddSDP');
+
+Route::post('/StoreSDP', 'SDPController@StoreSDP');
+
+Route::post('/AddAcc', 'SDPController@AddAcc');
 
 //Supply Demand And Feature of Agriculture
 Route::get('/agriculture', 'SDPController@index');
