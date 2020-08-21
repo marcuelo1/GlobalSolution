@@ -5,7 +5,7 @@
     <h6>Price: {{$product->Price}} &nbsp;&nbsp;&nbsp; MinOrder: {{$product->MinOrder}}</h6>
     <br>
     <div class="media">
-        <img src="/storage/images/{{$product->Image}}" class="align-self-center mr-3" style="width: 500px">
+        <img src="/../storage/app/public/images/{{$product->Image}}" class="align-self-center mr-3" style="width: 500px">
     </div>
     <br>
     <h5>Product Description: <br> {{$product->Description}}</h5>

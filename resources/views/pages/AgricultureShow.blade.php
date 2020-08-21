@@ -9,7 +9,7 @@
     <br>
     <hr>
     <h2>INFO</h2>
-    <img src="/storage/images/{{$product->Image}}" style="width: 500px;">
+    <img src="/../storage/app/public/images/{{$product->Image}}" style="width: 500px;">
     <div class="container">
         {!! $product->Info !!}
     </div>
@@ -95,6 +95,6 @@
             }
 
         });
-        
+
     </script>
 @endsection
