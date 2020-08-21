@@ -36,13 +36,12 @@ class MessagesController extends Controller
 
         $data = [
             'chatlist' => $chatlist,
-            'user_pos' => auth()->user()->user_pos,
         ];
         
         return view('pages.chatlist')->with($data);
     }
 
-    public function chat($id){
+    public function message($id){
         $user = User::find(auth()->user()->id);
         $username2 = User::find($id);
 
@@ -53,7 +52,7 @@ class MessagesController extends Controller
             'user_pos' => auth()->user()->user_pos,
         ];
 
-        return view('pages.chat')->with($data);
+        return view('pages.message')->with($data);
     }
 
     public function chatMessages(Request $request){

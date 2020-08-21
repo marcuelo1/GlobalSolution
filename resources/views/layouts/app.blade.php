@@ -57,9 +57,9 @@
                             @endif
                         @else
                             @if (Auth::user()->user_pos == 'Seller')
-                                <li class="nav-item"><a class="nav-link" href="/products">Your Products</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/../public/products">Your Products</a></li>
                             @endif
-                            <li class="nav-item"><a class="nav-link" href="/chat">Messages</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/../public/message">Messages</a></li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

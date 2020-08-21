@@ -9,8 +9,34 @@
         </div>
         
         <div class="form-group row">
-            {{ Form::label('productPrice', 'Product Price')}}
-            {{ Form::number('productPrice', '', ['class' => 'form-control']) }}
+            <div class="col">
+                {{ Form::label('productPrice', 'Product Price')}}
+                {{ Form::number('productPrice', '', ['class' => 'form-control']) }}
+            </div>
+
+            <div class="col">
+                {{ Form::label('productPriceUnit', 'Price Per')}}
+                {{ Form::select('productPriceUnit', ['m(meter)' => 'm(meter)',
+                                                    'mm(millimeter)' => 'mm(millimeter)',
+                                                    'cm(centimeter)' => 'cm(centimeter)',
+                                                    'dm(decimeter)' => 'dm(decimeter)',
+                                                    'in(inch)' => 'in(inch)',
+                                                    'ft(foot)' => 'ft(foot)',
+                                                    'yf(yard)' => 'yd(yard)',
+                                                    'sqm(square meter)' => 'sqm(square meter)',
+                                                    'ft2(square foot)' => 'ft2(square foot)',
+                                                    'm3(cubic meter)' => 'm3(cubic meter)',
+                                                    'l(liter)' => 'l(liter)',
+                                                    'ml(mililiter)' => 'ml(mililiter)',
+                                                    'in3(cubic inch)' => 'in3(cubic inch)',
+                                                    'ft3(cubic foot)' => 'ft3(cubic foot)',
+                                                    'cup' => 'cup',
+                                                    'gal(gallon)' => 'gal(gallon)',
+                                                    'g(grams)' => 'g(grams)',
+                                                    'kg(kilograms)' => 'kg(kilograms)',
+                                                    'lb(pound)' => 'lb(pound)',
+                                                    ], 'm(meter)', ['class' => 'custom-select']) }}
+            </div>
         </div>
         
         <div class="form-group row">
@@ -19,8 +45,35 @@
         </div>
         
         <div class="form-group row">
-            {{ Form::label('productMinOrder', 'Product Min Order') }}
-            {{ Form::number('productMinOrder', '', ['class' => 'form-control']) }}
+            <div class="col">
+                {{ Form::label('productMinOrder', 'Product Min Order') }}
+                {{ Form::number('productMinOrder', '', ['class' => 'form-control']) }}
+            </div>
+
+            <div class="col">
+                {{ Form::label('productMinOrderUnit', 'Unit')}}
+                {{ Form::select('productMinOrderUnit', ['m(meter)' => 'm(meter)',
+                                                    'mm(millimeter)' => 'mm(millimeter)',
+                                                    'cm(centimeter)' => 'cm(centimeter)',
+                                                    'dm(decimeter)' => 'dm(decimeter)',
+                                                    'in(inch)' => 'in(inch)',
+                                                    'ft(foot)' => 'ft(foot)',
+                                                    'yf(yard)' => 'yd(yard)',
+                                                    'sqm(square meter)' => 'sqm(square meter)',
+                                                    'ft2(square foot)' => 'ft2(square foot)',
+                                                    'm3(cubic meter)' => 'm3(cubic meter)',
+                                                    'l(liter)' => 'l(liter)',
+                                                    'ml(mililiter)' => 'ml(mililiter)',
+                                                    'in3(cubic inch)' => 'in3(cubic inch)',
+                                                    'ft3(cubic foot)' => 'ft3(cubic foot)',
+                                                    'cup' => 'cup',
+                                                    'gal(gallon)' => 'gal(gallon)',
+                                                    'g(grams)' => 'g(grams)',
+                                                    'kg(kilograms)' => 'kg(kilograms)',
+                                                    'lb(pound)' => 'lb(pound)',
+                                                    ], 'm(meter)', ['class' => 'custom-select']) }}
+
+            </div>
         </div>
         
         <div class="form-group row">

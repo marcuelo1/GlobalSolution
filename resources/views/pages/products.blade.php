@@ -25,7 +25,7 @@
                     <td>{{$product->Category}}</td>
                     <td>{{$product->Price}}</td>
                     <td>{{$product->MinOrder}}</td>
-                    <td><a class="btn btn-info btn-sm" href="/products/{{$product->id}}/edit">Edit</a></td>
+                    <td><a class="btn btn-info btn-sm" href="/../public/products/{{$product->id}}/edit">Edit</a></td>
                     <td>
                         {!! Form::open(['action' => ['ProductsController@destroy', $product->id], 'method' => 'POST']) !!}
                         {{ Form::hidden('_method', 'DELETE') }}

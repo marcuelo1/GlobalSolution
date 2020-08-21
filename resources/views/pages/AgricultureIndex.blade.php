@@ -10,7 +10,7 @@
     <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for products.." title="Type in a name">
     <ul id="myUL" class="list-group list-group-flush">
         @foreach ($products as $product)
-            <li class="list-group-item"><a href="/agriculture/{{ $product->id }}">{{ $product->ProductName }}</a></li>
+            <li class="list-group-item"><a href="/../public/agriculture/{{ $product->id }}">{{ $product->ProductName }}</a></li>
         @endforeach
     </ul>
     <br>

@@ -19,10 +19,12 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/search', 'HomeController@search');
 
+//Admin commands
 Route::get('/AgriAddSDP', 'SDPController@AgricultureAddData');
 
 Route::post('/AgriStoreSDP', 'SDPController@Agriculture');
 
+//Supply Demand And Feature of Agriculture
 Route::get('/agriculture', 'SDPController@index');
 
 Route::post('agriculture/getchartdata', 'SDPController@retrieveData');
@@ -31,16 +33,14 @@ Route::post('gettopchartdata', 'SDPController@retrieveTopData');
 
 Route::get('/agriculture/{id}', 'SDPController@show');
 
-Route::get('/chat/{id}', 'MessagesController@chat');
+//messages feature
+Route::get('/message/{id}', 'MessagesController@message');
 
-Route::get('/chat', 'MessagesController@index');
+Route::get('/message', 'MessagesController@index');
 
-Route::post('chat/chatMessages', 'MessagesController@chatMessages');
+Route::post('message/chatMessages', 'MessagesController@chatMessages');
 
-Route::post('chat/retrieveMessages', 'MessagesController@retrieveMessages');
+Route::post('message/retrieveMessages', 'MessagesController@retrieveMessages');
 
+//Products 
 Route::resource('products', 'ProductsController');
-
-Route::get('/test', function(){
-    return view('pages.test');
-});

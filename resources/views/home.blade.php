@@ -18,7 +18,7 @@
         {!! Form::close() !!}
         <hr>
         <h2>Supply, Demand, and Price here!</h2>
-        <a href="/agriculture" class="btn btn-info">Agriculture</a>
+        <a href="/../public/agriculture" class="btn btn-info">Agriculture</a>
     </center>
 </div>
 @endsection

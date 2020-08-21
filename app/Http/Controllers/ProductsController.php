@@ -54,11 +54,14 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
+        //Validate the request data
         $this->validate($request, [
             'productName' => 'required',
             'productPrice' => 'required',
             'productCategory' => 'required',
             'productMinOrder' => 'required',
+            'productPriceUnit' => 'required',
+            'productMinOrderUnit' => 'required',
             'productDescription' => 'required',
             'image' => 'image|nullable|max:4999'
         ]);
@@ -79,6 +82,7 @@ class ProductsController extends Controller
             $fileNameToStore = 'noimage.jpeg';
         }
         
+        //Saving the data to Database
         $product = new Product();
         $product->ProductName = $request->productName;
         $product->Price = $request->productPrice;
@@ -87,6 +91,8 @@ class ProductsController extends Controller
         $product->Description = $request->productDescription;
         $product->Owner = auth()->user()->id;
         $product->Image = $fileNameToStore;
+        $product->PriceUnit = $request->productPriceUnit;
+        $product->MinOrderUnit = $request->productMinOrderUnit;
         $product->save();
 
         return redirect('/products')->with('success', 'Product Added Successfully');
@@ -135,11 +141,14 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //Validate the request data
         $this->validate($request, [
             'productName' => 'required',
             'productPrice' => 'required',
             'productCategory' => 'required',
             'productMinOrder' => 'required',
+            'productPriceUnit' => 'required',
+            'productMinOrderUnit' => 'required',
             'productDescription' => 'required',
             'image' => 'image|nullable|max:4999'
         ]);
@@ -158,12 +167,15 @@ class ProductsController extends Controller
             $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
         }
         
+        //Updating the Database
         $product = Product::find($id);
         $product->ProductName = $request->productName;
         $product->Price = $request->productPrice;
         $product->Category = $request->productCategory;
         $product->MinOrder = $request->productMinOrder;
         $product->Description = $request->productDescription;
+        $product->PriceUnit = $request->productPriceUnit;
+        $product->MinOrderUnit = $request->productMinOrderUnit;
         $product->Owner = auth()->user()->id;
         if($request->hasFile('image')){
             $product->Image = $fileNameToStore;

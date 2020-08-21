@@ -15,7 +15,7 @@
         <tbody>
             @foreach ($products as $product)
                 <tr>
-                    <td><a href="products/{{$product->id}}">{{$product->ProductName}}</a></td>
+                    <td><a href="/../public/products/{{$product->id}}">{{$product->ProductName}}</a></td>
                     <td>{{$product->Price}}</td>
                     <td>{{$product->MinOrder}}</td>
                 </tr> 
